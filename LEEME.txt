@@ -1,0 +1,27 @@
+STREAMING GLOBAL — SITIO WEB
+
+ARCHIVOS:
+- index.html: página completa.
+- logo-streaming-global.png: logo que compartiste.
+- LEEME.txt: estas instrucciones.
+
+WHATSAPP:
+En index.html busca WHATSAPP_NUMBER. Está configurado con el número registrado anteriormente: 573053172425. Confirma que sea correcto antes de publicar. Usa indicativo del país y solo números.
+
+ADMINISTRACIÓN:
+Hay un panel básico al final de la página, con clave inicial SGadmin2026.
+IMPORTANTE: este panel solo guarda cambios en el navegador del dispositivo donde se edita. No sincroniza cambios con otros visitantes y la clave no es segura porque el código es público. Para una administración real compartida desde cualquier dispositivo, se necesitaría una base de datos y autenticación en un servicio backend. Cambia ADMIN_KEY antes de publicar, pero no uses este panel para datos sensibles.
+
+PUBLICAR GRATIS CON GITHUB PAGES:
+1. Crea una cuenta en GitHub.
+2. Crea un repositorio, por ejemplo streaming-global-web.
+3. Sube index.html y logo-streaming-global.png a la raíz.
+4. En Settings → Pages, elige “Deploy from a branch”.
+5. Selecciona la rama main y /(root), guarda.
+6. Espera a que aparezca la URL pública en Settings → Pages.
+
+ANTES DE PUBLICAR:
+- Revisa el número de WhatsApp y todos los precios.
+- Los precios son los configurados en la primera versión y deben verificarse.
+- La web no procesa pagos ni guarda pedidos.
+- Publica solo servicios que estés autorizado a ofrecer y aclara las condiciones aplicables.
