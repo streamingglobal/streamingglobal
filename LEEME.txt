@@ -1,3 +1,7 @@
-ACTUALIZACION STREAMING GLOBAL
-
-Sube y reemplaza index.html en la raiz del repositorio y agrega el archivo popup-netflix-prime-19000.jpg en la misma raiz. Conserva logo-streaming-global.png y promocion-streaming-global.png. El popup aparece en cada carga; tocar cualquier parte abre WhatsApp con el mensaje de compra y la X lo cierra.
+STREAMING GLOBAL — ACTUALIZACIÓN DE CATÁLOGO
+1. Reemplaza index.html en la raíz del repositorio.
+2. Sube la carpeta logos completa, conservando su estructura: logos/nombre.webp.
+3. Conserva los archivos logo-streaming-global.png, promocion-streaming-global.png y popup-netflix-prime-19000.jpg.
+4. Confirma con Commit changes.
+Incluye imágenes extraídas de los logos enviados en el PDF, tarjetas con imagen, ficha ampliada por producto, botón circular de WhatsApp con animación, animaciones de aparición y Netflix actualizado a $13.000 COP.
+La promoción Netflix + Prime Video se mantiene en $19.000 COP.

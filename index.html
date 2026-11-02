@@ -38,6 +38,34 @@ footer{padding:30px clamp(18px,5vw,72px);border-top:1px solid var(--line);color:
 .promo-popup-backdrop{position:fixed;inset:0;z-index:1000;background:#000c;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}.promo-popup-backdrop.is-open{opacity:1;visibility:visible}.promo-popup{position:relative;width:min(100%,520px);max-height:calc(100vh - 36px);overflow:auto;background:#10130e;border:1px solid #91df2b66;border-radius:22px;box-shadow:0 25px 90px #000b;transform:translateY(12px);transition:transform .25s}.is-open .promo-popup{transform:translateY(0)}.promo-popup .popup-poster{display:block;width:100%;height:auto;border-radius:22px;cursor:pointer}.promo-popup{overflow:hidden;cursor:pointer}.popup-close{position:absolute;right:12px;top:12px;z-index:2;width:38px;height:38px;border:1px solid #ffffff55;border-radius:50%;background:#080a0dcc;color:white;font-size:25px;cursor:pointer}
 @media(max-width:420px){.promo-popup-backdrop{padding:10px}.promo-popup{width:min(100%,520px);max-height:calc(100vh - 20px);overflow:auto}.popup-close{right:10px;top:10px}}
 
+
+/* Tarjetas visuales, ficha individual y animaciones */
+.card{cursor:pointer;overflow:hidden}
+.card .platform-icon{width:100%;height:150px;background:#080b09;border:1px solid #ffffff18;border-radius:13px;padding:0;margin-bottom:16px}
+.card .platform-icon img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}
+.card:hover .platform-icon img{transform:scale(1.045)}
+.card .buy{pointer-events:none}
+.wa-float{width:62px;height:62px;padding:0;border-radius:50%;justify-content:center;background:#25D366;color:white;box-shadow:0 8px 26px #0008;animation:waBounce 2.8s ease-in-out infinite}
+.wa-float svg{width:34px;height:34px;display:block}
+@keyframes waBounce{0%,80%,100%{transform:translateY(0)}88%{transform:translateY(-7px)}94%{transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s ease,transform .65s ease}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+.product-backdrop{position:fixed;inset:0;z-index:900;background:#000c;display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:.22s}
+.product-backdrop.is-open{opacity:1;visibility:visible}
+.product-dialog{position:relative;width:min(100%,520px);max-height:calc(100vh - 36px);overflow:auto;background:#111711;border:1px solid #91df2b55;border-radius:22px;box-shadow:0 25px 90px #000b;transform:translateY(14px) scale(.985);transition:transform .22s}
+.product-backdrop.is-open .product-dialog{transform:translateY(0) scale(1)}
+.product-close{position:absolute;right:12px;top:12px;z-index:3;width:40px;height:40px;border:1px solid #ffffff66;border-radius:50%;background:#080a0dcc;color:white;font-size:25px;cursor:pointer}
+.product-dialog img{display:block;width:100%;max-height:310px;object-fit:cover}
+.product-info{padding:22px}
+.product-info h2{font-size:27px;margin:0 0 10px}
+.product-info p{color:#c1cbbc;line-height:1.65;margin:0 0 18px}
+.product-benefits{display:grid;gap:10px;margin:0 0 20px;color:#e5eee0;font-size:14px}
+.product-benefits span{display:flex;align-items:center;gap:9px}
+.product-benefits b{color:var(--green)}
+.product-price{font-size:29px;font-weight:950;color:var(--green);margin-bottom:16px}
+.product-dialog .btn{width:100%}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
 </style>
 </head>
 <body>
@@ -59,6 +87,24 @@ footer{padding:30px clamp(18px,5vw,72px);border-top:1px solid var(--line);color:
   <div class="controls"><input id="search" class="search" type="search" placeholder="Buscar plataforma..." aria-label="Buscar plataforma"><button class="filter active" data-filter="todos">Todo</button><button class="filter" data-filter="video">Streaming</button><button class="filter" data-filter="musica">Música</button></div>
   <div class="grid" id="catalogGrid"></div>
 </div></section>
+
+<div class="product-backdrop" id="productBackdrop" aria-hidden="true">
+ <section class="product-dialog" role="dialog" aria-modal="true" aria-labelledby="productTitle">
+  <button class="product-close" id="productClose" type="button" aria-label="Cerrar">×</button>
+  <img id="productLargeImage" src="" alt="">
+  <div class="product-info">
+   <h2 id="productTitle"></h2>
+   <p id="productDescription"></p>
+   <div class="product-benefits">
+    <span><b>✓</b> Servicio por 30 días</span>
+    <span><b>✓</b> Entrega de datos de acceso según el plan</span>
+    <span><b>✓</b> Soporte por WhatsApp 24/7</span>
+   </div>
+   <div class="product-price" id="productPrice"></div>
+   <a class="btn" id="productBuy" href="#" target="_blank" rel="noopener">Comprar por WhatsApp</a>
+  </div>
+ </section>
+</div>
 
 <section class="section" id="promos" style="padding-top:0"><div class="section-inner">
   <div class="section-head"><div><div class="kicker">Oferta destacada</div><h2>Una promoción para disfrutar</h2><p class="sub">Una oferta especial de Streaming Global por tiempo limitado.</p></div></div>
@@ -88,13 +134,13 @@ footer{padding:30px clamp(18px,5vw,72px);border-top:1px solid var(--line);color:
   <img class="popup-poster" src="popup-netflix-prime-19000.jpg" alt="Combo promocional Netflix más Prime Video por 19.000 pesos, 30 días de servicio">
  </section>
 </div>
-<a class="wa-float" id="floatingWhatsapp" href="#" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">☏ WhatsApp</a>
+<a class="wa-float" id="floatingWhatsapp" href="#" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3.2A12.2 12.2 0 0 0 5.5 21.6L4 28l6.6-1.7A12.2 12.2 0 1 0 16 3.2Zm0 22.1c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.9 1 1-3.8-.3-.4A9.9 9.9 0 1 1 16 25.3Zm5.4-7.4c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.7l.5-.6.3-.6c.1-.2 0-.4 0-.6s-.7-1.7-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.8 1.2 3.2 1.4 3.4a11.6 11.6 0 0 0 4.5 4c.6.3 1.1.5 1.5.6.6.2 1.2.2 1.7.1.5-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.4Z"/></svg></a>
 <script>
 // CAMBIO RÁPIDO: reemplaza este número por tu WhatsApp con indicativo de país, solo números.
 // Colombia: 57 + número celular. Ejemplo: 573001234567
 const WHATSAPP_NUMBER = "573053172425";
 const defaultProducts = [
- {name:"Netflix Premium Full HD",price:14000,category:"video",initials:"N",tag:"Popular"},
+ {name:"Netflix Premium Full HD",price:13000,category:"video",initials:"N",tag:"Popular"},
  {name:"Prime Video",price:11000,category:"video",initials:"P"},
  {name:"VIX Premium",price:12000,category:"video",initials:"V"},
  {name:"IPTV Smarters Pro",price:12000,category:"video",initials:"IP"},
@@ -109,22 +155,51 @@ const defaultProducts = [
 ];
 const products = defaultProducts;
 const platformLogos = {
- "Netflix Premium Full HD": {url:"https://cdn.simpleicons.org/netflix/E50914", label:"N"},
- "Prime Video": {url:"https://cdn.simpleicons.org/primevideo/00A8E1", label:"prime video"},
- "VIX Premium": {url:"https://cdn.simpleicons.org/vix/FF5A00", label:"ViX"},
- "IPTV Smarters Pro": {label:"IPTV\nSMARTERS", cls:"iptv-logo"},
- "Disney+ Normal": {url:"https://cdn.simpleicons.org/disneyplus/113CCF", label:"Disney+"},
- "Disney+ Premium + 7 ESPN": {url:"https://cdn.simpleicons.org/disneyplus/113CCF", label:"Disney+ ESPN"},
- "HBO Max": {url:"https://cdn.simpleicons.org/hbo/6D28D9", label:"HBO MAX"},
- "Paramount+": {url:"https://cdn.simpleicons.org/paramountplus/0064FF", label:"Paramount+"},
- "Crunchyroll": {url:"https://cdn.simpleicons.org/crunchyroll/F47521", label:"crunchyroll"},
- "MeteGol TV": {label:"⚽ METEGOL TV", cls:"metegol-logo"},
- "YouTube Premium": {url:"https://cdn.simpleicons.org/youtube/FF0000", label:"YouTube"},
- "Spotify Premium": {url:"https://cdn.simpleicons.org/spotify/1DB954", label:"Spotify"}
+ "Netflix Premium Full HD": {src:"logos/netflix.webp", alt:"Netflix"},
+ "Prime Video": {src:"logos/prime.webp", alt:"Prime Video"},
+ "VIX Premium": {src:"logos/vix.webp", alt:"ViX Premium"},
+ "IPTV Smarters Pro": {src:"logos/iptv.webp", alt:"IPTV Smarters Pro"},
+ "Disney+ Normal": {src:"logos/disney.webp", alt:"Disney+"},
+ "Disney+ Premium + 7 ESPN": {src:"logos/disney.webp", alt:"Disney+ Premium y ESPN"},
+ "HBO Max": {src:"logos/hbo.webp", alt:"HBO Max"},
+ "Paramount+": {src:"logos/paramount.webp", alt:"Paramount+"},
+ "Crunchyroll": {src:"logos/crunchyroll.webp", alt:"Crunchyroll"},
+ "MeteGol TV": {src:"logos/metegol.webp", alt:"MeteGol TV"},
+ "YouTube Premium": {src:"logos/youtube.webp", alt:"YouTube Premium"},
+ "Spotify Premium": {src:"logos/spotify.webp", alt:"Spotify Premium"}
 };
 const money = n => "$" + Number(n).toLocaleString("es-CO");
 function waLink(message){return "https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message)}
 function productMessage(p){return `Hola, quiero comprar ${p.name} por ${money(p.price)} COP. ¿Me das más información?`}
+const descriptions = {
+ "Netflix Premium Full HD":"Disfruta de películas, series y documentales en Full HD. Accede a la pantalla asignada y encuentra entretenimiento para todos los gustos.",
+ "Prime Video":"Explora películas, series y producciones originales de Prime Video durante tus 30 días de servicio.",
+ "VIX Premium":"Encuentra novelas, series, películas y contenido en español para disfrutar de distintas opciones de entretenimiento.",
+ "IPTV Smarters Pro":"Aplicación para organizar y reproducir contenido IPTV compatible. Recibirás los datos correspondientes al servicio contratado.",
+ "Disney+ Normal":"Disfruta de historias de Disney, Pixar, Marvel, Star Wars y mucho más, de acuerdo con el catálogo disponible.",
+ "Disney+ Premium + 7 ESPN":"Una opción que combina entretenimiento y contenido deportivo incluido en el paquete contratado.",
+ "HBO Max":"Descubre películas, series y producciones originales para disfrutar durante tu tiempo libre.",
+ "Paramount+":"Accede a películas, series y producciones de entretenimiento de Paramount+.",
+ "Crunchyroll":"Sumérgete en el mundo del anime con series y películas de animación japonesa.",
+ "MeteGol TV":"Una alternativa de entretenimiento deportivo para los aficionados al fútbol y la programación deportiva.",
+ "YouTube Premium":"Disfruta de funciones Premium de YouTube, como reproducción sin anuncios y en segundo plano, según el plan disponible.",
+ "Spotify Premium":"Escucha tus canciones, álbumes y podcasts favoritos con las funciones Premium disponibles en tu plan."
+};
+function openProduct(p){
+ const logo=platformLogos[p.name];
+ document.getElementById("productLargeImage").src=logo.src;
+ document.getElementById("productLargeImage").alt=logo.alt;
+ document.getElementById("productTitle").textContent=p.name;
+ document.getElementById("productDescription").textContent=descriptions[p.name]||"Consulta los detalles de este servicio por WhatsApp.";
+ document.getElementById("productPrice").textContent=money(p.price)+" COP";
+ document.getElementById("productBuy").href=waLink(productMessage(p));
+ const backdrop=document.getElementById("productBackdrop");
+ backdrop.classList.add("is-open");backdrop.setAttribute("aria-hidden","false");
+}
+function closeProduct(){
+ const backdrop=document.getElementById("productBackdrop");
+ backdrop.classList.remove("is-open");backdrop.setAttribute("aria-hidden","true");
+}
 function render(){
  const q=document.getElementById("search").value.trim().toLowerCase();
  const active=document.querySelector(".filter.active").dataset.filter;
@@ -133,13 +208,14 @@ function render(){
  grid.innerHTML="";
  if(!list.length){grid.innerHTML='<div class="empty" style="display:block">No encontramos esa plataforma. Prueba con otro nombre.</div>';return}
  list.forEach(p=>{
-  const card=document.createElement("article");card.className="card";
-  const logo=platformLogos[p.name]||{label:p.initials};
-  const logoMarkup=logo.url?`<img src="${logo.url}" alt="Logo de ${p.name}" loading="lazy" onerror="this.remove();this.parentElement.innerHTML='<span class=\'fallback-logo\'>${logo.label}</span>'">`:`<span class="fallback-logo ${logo.cls||''}">${logo.label}</span>`;
-  card.innerHTML=`${p.tag?`<span class="tag">${p.tag}</span>`:""}<div class="platform-icon">${logoMarkup}</div><h3>${p.name}</h3><div class="duration">Plan de 30 días</div><div class="price-row"><span class="price">${money(p.price)}</span><span class="currency">COP</span></div><a class="btn buy" href="${waLink(productMessage(p))}" target="_blank" rel="noopener">Comprar por WhatsApp ↗</a>`;
+  const card=document.createElement("article");card.className="card reveal is-visible";
+  const logo=platformLogos[p.name];
+  card.innerHTML=`${p.tag?`<span class="tag">${p.tag}</span>`:""}<div class="platform-icon"><img src="${logo.src}" alt="${logo.alt}" loading="lazy"></div><h3>${p.name}</h3><div class="duration">Plan de 30 días</div><div class="price-row"><span class="price">${money(p.price)}</span><span class="currency">COP</span></div><button class="btn buy" type="button">Ver detalles ↗</button>`;
+  card.addEventListener("click",()=>openProduct(p));
   grid.appendChild(card);
  });
 }
+
 document.querySelectorAll(".filter").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");render()}));
 document.getElementById("search").addEventListener("input",render);
 document.getElementById("heroWhatsapp").href=waLink("Hola, quiero información sobre el catálogo de Streaming Global.");
@@ -147,6 +223,18 @@ document.getElementById("heroWhatsapp").href=waLink("Hola, quiero información s
 document.getElementById("floatingWhatsapp").href=waLink("Hola, necesito ayuda con Streaming Global.");
 document.getElementById("year").textContent=new Date().getFullYear();
 render();
+document.getElementById("productClose").addEventListener("click",closeProduct);
+document.getElementById("productBackdrop").addEventListener("click",e=>{if(e.target.id==="productBackdrop")closeProduct();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeProduct();});
+
+// Aparición progresiva de secciones y tarjetas.
+document.querySelectorAll(".hero-inner,.section-head,.card,.feature,.faq details,.promo-card").forEach(el=>el.classList.add("reveal"));
+if("IntersectionObserver" in window){
+ const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+  if(entry.isIntersecting){entry.target.classList.add("is-visible");revealObserver.unobserve(entry.target);}
+ }),{threshold:.08});
+ document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
+}
 
 // Enlaces de contacto y promoción destacados.
 document.getElementById("promoWhatsapp").href=waLink("Hola, quiero adquirir el combo promocional Netflix 1 pantalla + Prime Video por $19.000 COP durante 30 días. ¿Está disponible?");
